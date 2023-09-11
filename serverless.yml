@@ -1,0 +1,35 @@
+service: aws-node-http-api-project
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: 'eu-west-2'
+  iam:
+    role:
+      statements:
+        # Allow function to read/write objects in a bucket (least permissions)
+        - Effect: Allow
+          Action:
+            - 's3:GetObject'
+            - 's3:PutObject'
+          Resource:
+            - 'arn:aws:s3:::invidibility-score-bucket/*'
+
+functions:
+  invisibilityScore:
+    handler: src/invisibilityScore.handler
+    events:
+      - httpApi:
+          path: /
+          method: get
+
+resources:
+  Resources:
+    invisibilityScoreBucket:
+      Type: 'AWS::S3::Bucket'
+      Properties:
+        BucketName: invidibility-score-bucket
+
+	
+
