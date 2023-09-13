@@ -1,7 +1,6 @@
 
 const invisibilityScore = async (event) => {
-  console.log(event)
-  const {uuid, invisibilityScore, status} = event;
+  const {uuid, invisibilityScore, status} =  JSON.parse(event.body);
   const AWS = require('aws-sdk');
   const { parse } = require('json2csv')
   const s3 = new AWS.S3();
@@ -17,8 +16,8 @@ const invisibilityScore = async (event) => {
     statusCode: 200,
     body: JSON.stringify(
       {
-        message: 'THIS IS THE RESPONSE: ' + res,
-        input: event,
+        message: 'THIS IS THE RESPONSE ' + uuid + ' ' + invisibilityScore + ' ' + status,
+        input: res,
       },
       null,
       2
