@@ -1,6 +1,8 @@
 service: aws-node-http-api-project
 frameworkVersion: '3'
 
+# for production I would add stages here to deploy to dev/test/prod for example 
+
 provider:
   name: aws
   runtime: nodejs18.x
@@ -8,7 +10,7 @@ provider:
   iam:
     role:
       statements:
-        # Allow function to read/write objects in a bucket (least permissions)
+        # Allow function to read/write objects in a bucket, chose this over ORM as it's easier to demonstrate least permissions & knowledge of IAM
         - Effect: Allow
           Action:
             - 's3:GetObject'
